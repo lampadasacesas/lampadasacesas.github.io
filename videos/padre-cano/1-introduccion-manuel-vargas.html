@@ -76,7 +76,7 @@
       <div class="video-wrapper">
         <iframe
           id="yt-player"
-          src="https://www.youtube.com/embed/ApF6u3JtJNc?rel=0&modestbranding=1&cc_load_policy=0"
+          src="https://www.youtube.com/embed/ApF6u3JtJNc?rel=0&modestbranding=1&cc_load_policy=0&enablejsapi=1"
           title="1 Introdução (MANUEL VARGAS)"
           frameborder="0"
           allowfullscreen
@@ -143,18 +143,18 @@
 
     // Parse do SRT para array de objetos {start, end, text}
     function parseSRT(srt) {
-      const blocks = srt.trim().split(/\n\s*\n/);
+      const blocks = srt.trim().split(/\r?\n\r?\n/);
       return blocks.map(block => {
-        const lines = block.trim().split('\n');
+        const lines = block.trim().split(/\r?\n/);
         if (lines.length < 3) return null;
-        const timeLine = lines[1];
-        const match = timeLine.match(/(\d+):(\d+):(\d+),(\d+) --> (\d+):(\d+):(\d+),(\d+)/);
+        const timeLine = lines[1].trim();
+        const match = timeLine.match(/(\d+):(\d+):(\d+)[,.](\d+) --> (\d+):(\d+):(\d+)[,.](\d+)/);
         if (!match) return null;
         const toSec = (h, m, s, ms) => parseInt(h)*3600 + parseInt(m)*60 + parseInt(s) + parseInt(ms)/1000;
         return {
           start: toSec(match[1], match[2], match[3], match[4]),
           end:   toSec(match[5], match[6], match[7], match[8]),
-          text:  lines.slice(2).join(' ')
+          text:  lines.slice(2).map(l => l.trim()).filter(Boolean).join(' ')
         };
       }).filter(Boolean);
     }
