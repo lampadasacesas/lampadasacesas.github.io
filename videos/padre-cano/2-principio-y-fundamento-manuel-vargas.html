@@ -40,6 +40,16 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-G8LLHBT6XH');
+
+    // Tela cheia com legenda (container inteiro: iframe + barra)
+    function toggleFullscreen() {
+      const container = document.querySelector('.video-container');
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        (container.requestFullscreen || container.webkitRequestFullscreen).call(container);
+      } else {
+        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      }
+    }
   </script>
 </head>
 <body>
@@ -95,10 +105,11 @@
     <!-- CONTROLES DE LEGENDA -->
     <div class="subtitle-controls">
       <label>Tamanho da fonte:
-        <input type="range" id="font-size-slider" min="12" max="32" value="18">
-        <span id="font-size-value">18px</span>
+        <input type="range" id="font-size-slider" min="12" max="32" value="22">
+        <span id="font-size-value">22px</span>
       </label>
       <button onclick="toggleTranscricao()">📖 Ver transcrição completa</button>
+      <button onclick="toggleFullscreen()">⛶ Tela Cheia c/ Legendas</button>
       <a href="https://www.youtube.com/watch?v=IgrUdviUiCA" target="_blank" class="btn-original">
         📺 Ver no YouTube original
       </a>
@@ -160,6 +171,33 @@
     }
 
     const legendas = parseSRT(SRT_DATA);
+    
+    // Mescla segmentos proximos em frases mais completas para a barra de exibicao
+    function mesclarParaBarra(segs, maxGap, maxChars) {
+      const result = [];
+      let i = 0;
+      while (i < segs.length) {
+        let texto = segs[i].text;
+        let inicio = segs[i].start;
+        let fim = segs[i].end;
+        while (
+          i + 1 < segs.length &&
+          (segs[i+1].start - segs[i].end) <= maxGap &&
+          (texto + ' ' + segs[i+1].text).length <= maxChars
+        ) {
+          i++;
+          texto += ' ' + segs[i].text;
+          fim = segs[i].end;
+        }
+        result.push({ start: inicio, end: fim, text: texto });
+        i++;
+      }
+      return result;
+    }
+
+    // legendasBar: segmentos mesclados para exibicao fluida na barra (gap<=0.8s, max 130 chars)
+    const legendasBar = mesclarParaBarra(legendas, 0.8, 130);
+
     const display  = document.getElementById('subtitle-display');
     const player   = document.getElementById('yt-player');
     let intervalo  = null;
@@ -189,24 +227,50 @@
     function atualizarLegenda() {
       if (!ytPlayer || !ytPlayer.getCurrentTime) return;
       const tempo = ytPlayer.getCurrentTime();
-      const atual = legendas.find(l => tempo >= l.start && tempo <= l.end);
+      const atual = legendasBar.find(l => tempo >= l.start && tempo <= l.end);
       display.textContent = atual ? atual.text : '';
     }
 
     // Tamanho da fonte
     const slider = document.getElementById('font-size-slider');
     const fontVal = document.getElementById('font-size-value');
+    display.style.fontSize = slider.value + 'px';  // aplica valor inicial
     slider.addEventListener('input', function() {
       display.style.fontSize = this.value + 'px';
       fontVal.textContent = this.value + 'px';
     });
 
-    // Transcrição completa
+    // Transcricao completa - agrupa legendas por pausas (>2s = novo paragrafo)
     function toggleTranscricao() {
       const div = document.getElementById('transcricao-completa');
       const texto = document.getElementById('transcricao-texto');
       if (div.style.display === 'none') {
-        const html = legendas.map(l => `<p class="leg-paragrafo">${l.text}</p>`).join('');
+        const PAUSA = 2.0;
+        const paragrafos = [];
+        let atual = [];
+        for (let i = 0; i < legendas.length; i++) {
+          atual.push(legendas[i].text);
+          const prox = legendas[i + 1];
+          if (!prox || (prox.start - legendas[i].end) > PAUSA) {
+            paragrafos.push(atual.join(' '));
+            atual = [];
+          }
+        }
+        const html = paragrafos.map(p => `<p class="leg-paragrafo">${p}</p>`).join('');
+        texto.innerHTML = html;
+        div.style.display = 'block';
+      } else {
+        div.style.display = 'none';
+      }
+    }
+        }
+        const html = paragrafos.map(p => `<p class="leg-paragrafo">${p}</p>`).join('');
+        texto.innerHTML = html;
+        div.style.display = 'block';
+      } else {
+        div.style.display = 'none';
+      }
+    }</p>`).join('');
         texto.innerHTML = html;
         div.style.display = 'block';
       } else {
