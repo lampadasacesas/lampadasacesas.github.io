@@ -1,0 +1,49 @@
+# === SEGURANCA — Repo PUBLICO do site LampadasAcesas ===
+# Este repo e PUBLICO (GitHub Pages). NUNCA commitar dados sensiveis aqui.
+
+# API Keys e segredos
+.env
+.env.*
+*.env
+*.key
+*.pem
+api_keys.txt
+secrets.json
+config_local.py
+config.py
+
+# Configuracoes locais de IDEs
+.vscode/
+.idea/
+*.code-workspace
+
+# Python (caso algum script de teste acabe aqui)
+__pycache__/
+*.py[cod]
+*.pyc
+venv/
+.venv/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Temporarios
+*.tmp
+*.temp
+*.log
+*.bak
+*.backup
+
+# Arquivos de output/pipeline (nao pertencem ao site estatico)
+output/
+temp/
+*.db
+*.sqlite
+
+# Compactados
+*.zip
+*.tar.gz
+*.rar
