@@ -57,6 +57,19 @@ a:hover { text-decoration: underline; opacity: 0.85; }
   font-weight: bold;
   letter-spacing: 0.5px;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  height: 1.8em;
+  width: 1.8em;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(200,160,32,0.6);
 }
 
 .site-header nav { display: flex; gap: 16px; flex-wrap: wrap; }
