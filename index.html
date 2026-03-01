@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,15 +10,22 @@
   <meta property="og:description" content="Evangelização católica com legendas em português brasileiro">
   <meta property="og:url" content="https://lampadasacesas.com.br">
   <meta property="og:type" content="website">
+
+  <!-- PWA — Fase 3.1 -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#5a0000">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+
   <link rel="stylesheet" href="assets/style.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-G8LLHBT6XH"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-G8LLHBT6XH');
   </script>
 </head>
+
 <body>
   <header class="site-header">
     <a href="index.html" class="logo">🕯️ Lâmpadas Acesas</a>
@@ -105,5 +113,13 @@
     <p>🕯️ Lâmpadas Acesas — Evangelização Católica em Português Brasileiro</p>
     <p><small>Legendas geradas com IA. Conteúdo original dos respectivos canais.</small></p>
   </footer>
+
+  <script>
+    // PWA — Fase 3.1 (registro do Service Worker)
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js').catch(() => { });
+    }
+  </script>
 </body>
+
 </html>

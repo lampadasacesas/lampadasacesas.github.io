@@ -1,6 +1,7 @@
 /* =============================================================================
    LÂMPADAS ACESAS — Folha de Estilos
    Tema claro elegante — vermelho escuro + dourado + fundo creme
+   v3.1.0 — Fase 2 (Overlay Netflix + TV Mode) + Fase 3 (PWA + WebView Banner)
    ============================================================================= */
 
 :root {
@@ -238,7 +239,7 @@ main {
 }
 
 .video-wrapper {
-  position: relative;
+  position: relative;   /* CRÍTICO — ancora o overlay */
   padding-bottom: 56.25%;
   height: 0;
   overflow: hidden;
@@ -251,7 +252,7 @@ main {
   border: none;
 }
 
-/* Barra de legenda sincronizada */
+/* Barra de legenda sincronizada (modo normal) */
 .subtitle-bar {
   background: #1a1a1a;
   border-top: 3px solid var(--cor-primaria);
@@ -262,7 +263,39 @@ main {
   padding: 12px 20px;
 }
 
-/* Tela cheia com legenda (botão personalizado — inclui barra de legenda) */
+/* ── OVERLAY DE LEGENDA ESTILO NETFLIX (FASE 2.1) ────────────── */
+/* Posicionado sobre o vídeo, visível SOMENTE em fullscreen       */
+.subtitle-overlay {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;       /* CRÍTICO — não bloqueia cliques no player */
+  z-index: 10;
+  /* Oculto em modo normal — CSS :fullscreen o torna visível */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.subtitle-overlay-text {
+  background: rgba(0, 0, 0, 0.72);
+  color: #ffffff;
+  padding: 14px 22px;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  max-width: 100%;
+  text-align: center;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.9);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+/* ── FULLSCREEN: modo coluna (container) ─────────────────────── */
+/* Ativa o overlay e reorganiza o layout em fullscreen            */
 .video-container:-webkit-full-screen,
 .video-container:fullscreen {
   display: flex;
@@ -271,6 +304,7 @@ main {
   border-radius: 0;
   border: none;
 }
+
 .video-container:-webkit-full-screen .video-wrapper,
 .video-container:fullscreen .video-wrapper {
   flex: 1;
@@ -278,12 +312,28 @@ main {
   padding-bottom: 0;
   height: auto;
 }
+
 .video-container:-webkit-full-screen .video-wrapper iframe,
 .video-container:fullscreen .video-wrapper iframe {
   position: static;
   width: 100%;
   height: 100%;
 }
+
+/* Exibe o overlay em fullscreen */
+.video-container:-webkit-full-screen .subtitle-overlay,
+.video-container:fullscreen .subtitle-overlay {
+  opacity: 1;
+}
+
+/* Fonte maior no overlay em fullscreen */
+.video-container:-webkit-full-screen .subtitle-overlay-text,
+.video-container:fullscreen .subtitle-overlay-text {
+  font-size: 2.4rem;
+  padding: 18px 28px;
+}
+
+/* Mantém a barra abaixo em fullscreen (dois modos coexistem) */
 .video-container:-webkit-full-screen .subtitle-bar,
 .video-container:fullscreen .subtitle-bar {
   flex-shrink: 0;
@@ -307,7 +357,7 @@ main {
   flex-wrap: wrap;
   gap: 12px;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   padding: 14px 16px;
   background: var(--cor-card);
   border-radius: var(--raio);
@@ -348,6 +398,117 @@ main {
   text-decoration: none;
   transform: translateY(-1px);
 }
+
+/* Botão TV Mode — destaque visual diferenciado */
+#btn-tv-mode {
+  background: var(--cor-primaria);
+  color: #fde8a0;
+  border: 1px solid #c8a020;
+}
+
+#btn-tv-mode:hover {
+  background: #5a0000;
+  color: #ffe066;
+  transform: translateY(-1px);
+}
+
+/* ── INSTRUÇÃO TV (FASE 2.3) ─────────────────────────────────── */
+.instrucao-tv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #1a1a2e;
+  color: #FFD700;
+  border: 1px solid #c8a020;
+  border-radius: var(--raio);
+  padding: 14px 20px;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.instrucao-tv-close {
+  background: transparent;
+  border: 1px solid #c8a020;
+  color: #FFD700;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.instrucao-tv-close:hover {
+  background: #c8a020;
+  color: #1a1a2e;
+}
+
+/* ── BANNER WEBVIEW WHATSAPP (FASE 3.2) ──────────────────────── */
+.webview-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: #25D366;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.webview-btn {
+  background: #fff;
+  color: #1a5c32;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.webview-btn:hover {
+  background: #f0fff4;
+  text-decoration: none;
+  transform: scale(1.03);
+}
+
+.webview-close {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.7);
+  color: #fff;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.webview-close:hover { background: rgba(255,255,255,0.2); }
 
 /* Transcrição completa */
 .transcricao {
@@ -450,4 +611,14 @@ main {
   .subtitle-controls { flex-direction: column; align-items: flex-start; }
   .share-buttons { flex-direction: column; }
   .btn-share { width: 100%; justify-content: center; }
+  .instrucao-tv { flex-direction: column; text-align: center; }
+  .webview-banner { flex-direction: column; text-align: center; }
+
+  /* Overlay menor em mobile */
+  .subtitle-overlay-text { font-size: 1.1rem; padding: 10px 14px; }
+  .video-container:-webkit-full-screen .subtitle-overlay-text,
+  .video-container:fullscreen .subtitle-overlay-text {
+    font-size: 1.6rem;
+    padding: 12px 18px;
+  }
 }

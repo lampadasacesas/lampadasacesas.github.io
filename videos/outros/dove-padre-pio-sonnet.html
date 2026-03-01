@@ -6,28 +6,14 @@
   <title>Onde Padre Pio celebrava, o Paraíso se fazia presente | Lâmpadas Acesas</title>
 
   <!-- SEO -->
-  <meta name="description" content="Homilia/palestra legendada em PT-BR. https://www.padrepio.it/
-
-PADRE PIO TV
-Emittente televisiva cattolica dei frati cappuccini di San Giovanni Rotondo.
-
-Puoi guardare Padre Pio Tv 
-sul digitale terrestre al canale 145, 
-su Tv Sat al can">
+  <meta name="description" content="Homilia/palestra legendada em PT-BR. Onde Padre Pio celebrava, o Paraíso se fazia presente">
   <meta name="keywords" content="católico, evangelização, legenda português, outros">
   <meta name="author" content="Lâmpadas Acesas">
 
   <!-- Open Graph (preview no WhatsApp, Telegram, Facebook) -->
   <meta property="og:type"        content="video.other">
   <meta property="og:title"       content="Onde Padre Pio celebrava, o Paraíso se fazia presente | Lâmpadas Acesas">
-  <meta property="og:description" content="Homilia/palestra legendada em PT-BR. https://www.padrepio.it/
-
-PADRE PIO TV
-Emittente televisiva cattolica dei frati cappuccini di San Giovanni Rotondo.
-
-Puoi guardare Padre Pio Tv 
-sul digitale terrestre al canale 145, 
-su Tv Sat al can">
+  <meta property="og:description" content="Homilia/palestra legendada em PT-BR. Onde Padre Pio celebrava, o Paraíso se fazia presente">
   <meta property="og:image"       content="https://lampadasacesas.com.br/assets/thumbnails/PEkn_CQOhfc.jpg">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="720">
@@ -38,15 +24,13 @@ su Tv Sat al can">
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image">
   <meta name="twitter:title"       content="Onde Padre Pio celebrava, o Paraíso se fazia presente">
-  <meta name="twitter:description" content="Homilia/palestra legendada em PT-BR. https://www.padrepio.it/
-
-PADRE PIO TV
-Emittente televisiva cattolica dei frati cappuccini di San Giovanni Rotondo.
-
-Puoi guardare Padre Pio Tv 
-sul digitale terrestre al canale 145, 
-su Tv Sat al can">
+  <meta name="twitter:description" content="Homilia/palestra legendada em PT-BR. Onde Padre Pio celebrava, o Paraíso se fazia presente">
   <meta name="twitter:image"       content="https://lampadasacesas.com.br/assets/thumbnails/PEkn_CQOhfc.jpg">
+
+  <!-- PWA -->
+  <link rel="manifest" href="../../manifest.json">
+  <meta name="theme-color" content="#5a0000">
+  <link rel="apple-touch-icon" href="../../assets/icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" href="../../assets/favicon.ico" type="image/x-icon">
@@ -64,6 +48,13 @@ su Tv Sat al can">
   </script>
 </head>
 <body>
+
+  <!-- BANNER WEBVIEW (Fase 3.2) — visivel apenas no navegador interno do WhatsApp/Instagram -->
+  <div id="webview-banner" class="webview-banner" style="display:none">
+    <span>📱 Para melhor experiência (legendas + Chromecast):</span>
+    <a id="webview-chrome-link" href="#" class="webview-btn">Abrir no Chrome</a>
+    <button onclick="document.getElementById('webview-banner').style.display='none'" class="webview-close">✕</button>
+  </div>
 
   <!-- HEADER -->
   <header class="site-header">
@@ -93,8 +84,8 @@ su Tv Sat al can">
     <p class="video-meta">📺 Padre Pio TV &nbsp;|&nbsp; 📅 Legendado em 28/02/2026 &nbsp;|&nbsp; 🌐 Legenda: PT-BR</p>
 
     <!-- PLAYER DO YOUTUBE -->
-    <div class="video-container">
-      <div class="video-wrapper">
+    <div class="video-container" id="video-container">
+      <div class="video-wrapper" id="video-wrapper">
         <iframe
           id="yt-player"
           src="https://www.youtube.com/embed/PEkn_CQOhfc?rel=0&modestbranding=1&cc_load_policy=0&enablejsapi=1"
@@ -103,9 +94,15 @@ su Tv Sat al can">
           allowfullscreen
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
         </iframe>
+
+        <!-- OVERLAY DE LEGENDA ESTILO NETFLIX (Fase 2.1) -->
+        <!-- Visível apenas em fullscreen via classe CSS :fullscreen -->
+        <div class="subtitle-overlay" id="subtitle-overlay" aria-live="polite">
+          <span class="subtitle-overlay-text" id="subtitle-overlay-text"></span>
+        </div>
       </div>
 
-      <!-- LEGENDA SINCRONIZADA -->
+      <!-- LEGENDA SINCRONIZADA — BARRA ABAIXO (modo normal) -->
       <div class="subtitle-bar">
         <div id="subtitle-display" class="subtitle-text">
           ▶ Pressione play para ver as legendas sincronizadas
@@ -119,11 +116,19 @@ su Tv Sat al can">
         <input type="range" id="font-size-slider" min="12" max="32" value="22">
         <span id="font-size-value">22px</span>
       </label>
-      <button onclick="toggleTranscricao()">📖 Ver transcrição completa</button>
-      <button onclick="toggleFullscreen()">⛶ Tela Cheia c/ Legendas</button>
+      <button id="btn-transcricao" onclick="toggleTranscricao()">📖 Ver transcrição completa</button>
+      <button id="btn-fullscreen" onclick="toggleFullscreen()">⛶ Tela Cheia c/ Legendas</button>
+      <!-- Botão TV Mode (Fase 2.2) -->
+      <button id="btn-tv-mode" onclick="ativarModoTV()">📺 Assistir na TV</button>
       <a href="https://www.youtube.com/watch?v=PEkn_CQOhfc" target="_blank" class="btn-original">
         📺 Ver no YouTube original
       </a>
+    </div>
+
+    <!-- INSTRUÇÃO TV (Fase 2.3) — aparece após ativar TV Mode -->
+    <div id="instrucao-tv" class="instrucao-tv" style="display:none">
+      <span id="instrucao-tv-texto"></span>
+      <button onclick="fecharInstrucaoTV()" class="instrucao-tv-close">✕</button>
     </div>
 
     <!-- TRANSCRIÇÃO COMPLETA (oculta por padrão) -->
@@ -158,8 +163,11 @@ su Tv Sat al can">
     <p><small>Legendas geradas automaticamente com IA e revisão. Conteúdo original dos respectivos canais.</small></p>
   </footer>
 
-  <!-- SCRIPT DE LEGENDAS SINCRONIZADAS -->
+  <!-- ===================================================================
+       SCRIPTS
+       =================================================================== -->
   <script>
+    // ─── DADOS SRT ────────────────────────────────────────────────────────
     const SRT_DATA = "1\n00:00:08,360 --> 00:00:13,480\nUm minuto com Padre Pio dos lugares do\n\n2\n00:00:10,480 --> 00:00:15,000\nconvento de San Giovanni Rotondo. Estamos\n\n3\n00:00:13,480 --> 00:00:17,880\nna clausura, um canto da\n\n4\n00:00:15,000 --> 00:00:21,119\nclausura que nos permite recordar\n\n5\n00:00:17,880 --> 00:00:24,519\neh algo excepcional que acontecia\n\n6\n00:00:21,119 --> 00:00:28,119\nbem aqui, ali\u00e1s na igreja, quando\n\n7\n00:00:24,519 --> 00:00:30,759\nPadre Pio disse \"Ao redor do altar est\u00e1\n\n8\n00:00:28,119 --> 00:00:32,640\ntodo o para\u00edso\". E o Senhor\n\n9\n00:00:30,759 --> 00:00:35,239\npermitiu que algum afortunado filho\n\n10\n00:00:32,640 --> 00:00:39,879\nespiritual pudesse ver com os pr\u00f3prios\n\n11\n00:00:35,239 --> 00:00:42,960\nolhos esta maravilhosa realidade.\n\n12\n00:00:39,879 --> 00:00:46,760\nE aqui relatamos o belo testemunho\n\n13\n00:00:42,960 --> 00:00:48,879\nde Fra Daniele Natale que lhe foi\n\n14\n00:00:46,760 --> 00:00:51,239\nconfiado por uma carta escrita por\n\n15\n00:00:48,879 --> 00:00:54,480\nEnrico Cerioni,\n\n16\n00:00:51,239 --> 00:00:56,000\num sardo residente em Roma depois de ter\n\n17\n00:00:54,480 --> 00:00:58,239\npassado alguns dias em San Giovanni\n\n18\n00:00:56,000 --> 00:01:01,440\nRotondo. Ele escreve exatamente isto:\n\n19\n00:00:58,239 --> 00:01:02,960\nEnquanto junto aos fi\u00e9is estava esperando\n\n20\n00:01:01,440 --> 00:01:05,159\nque Padre Pio viesse \u00e0 igreja para\n\n21\n00:01:02,960 --> 00:01:07,920\ncelebrar a Santa Missa, vi\n\n22\n00:01:05,159 --> 00:01:10,280\nsair da sacristia duas fileiras de\n\n23\n00:01:07,920 --> 00:01:12,680\nanjos que o precediam. O padre\n\n24\n00:01:10,280 --> 00:01:14,680\ntinha ao lado Nossa Senhora, aproximou-se\n\n25\n00:01:12,680 --> 00:01:17,200\ndo altar, enquanto a M\u00e3e de Deus se\n\n26\n00:01:14,680 --> 00:01:19,040\ncolocou de um lado. Assim que come\u00e7ou o\n\n27\n00:01:17,200 --> 00:01:21,759\nsalmo 42,\n\n28\n00:01:19,040 --> 00:01:23,280\nPadre Pio se tornou luminoso e assim permaneceu\n\n29\n00:01:21,759 --> 00:01:25,920\npor todo o tempo da celebra\u00e7\u00e3o\n\n30\n00:01:23,280 --> 00:01:28,000\neucar\u00edstica. Na eleva\u00e7\u00e3o apareceu Jesus\n\n31\n00:01:25,920 --> 00:01:31,079\nque se fundia com Padre Pio. Eu tinha\n\n32\n00:01:28,000 --> 00:01:33,520\ndificuldade em distinguir essas duas pessoas.\n\n33\n00:01:31,079 --> 00:01:37,000\nNa comunh\u00e3o, a fus\u00e3o se tornou\n\n34\n00:01:33,520 --> 00:01:38,840\ntotal por efus\u00e3o de amor. O Cerioni\n\n35\n00:01:37,000 --> 00:01:41,640\nconclu\u00eda o escrito pedindo a Fra\n\n36\n00:01:38,840 --> 00:01:44,920\nDaniele para perguntar a Padre Pio se\n\n37\n00:01:41,640 --> 00:01:47,520\no que havia visto teria sido apenas uma\n\n38\n00:01:44,920 --> 00:01:51,159\nsua imagina\u00e7\u00e3o fantasiosa ou\n\n39\n00:01:47,520 --> 00:01:54,719\ncorrespondia \u00e0 realidade.\n\n40\n00:01:51,159 --> 00:01:59,280\nFra Daniele, recebida esta carta,\n\n41\n00:01:54,719 --> 00:02:02,680\nvai imediatamente at\u00e9 Padre Pio\n\n42\n00:01:59,280 --> 00:02:04,880\ne colocando em suas m\u00e3os a carta de\n\n43\n00:02:02,680 --> 00:02:08,800\nEnrico pergunta-lhe se aquele filho\n\n44\n00:02:04,880 --> 00:02:12,319\nespiritual tinha visto certo.\n\n45\n00:02:08,800 --> 00:02:15,360\nO padre percorre lentamente as linhas\n\n46\n00:02:12,319 --> 00:02:18,000\ndaquela carta e ent\u00e3o lhe diz: \"A primeira\n\n47\n00:02:15,360 --> 00:02:19,800\nparte, aquela que se refere \u00e0 presen\u00e7a\n\n48\n00:02:18,000 --> 00:02:21,400\ndos anjos e de Nossa Senhora ao redor\n\n49\n00:02:19,800 --> 00:02:23,519\ndo altar,\n\n50\n00:02:21,400 --> 00:02:26,160\n\u00e9 assim\n\n51\n00:02:23,519 --> 00:02:30,519\ne fica em sil\u00eancio.\n\n52\n00:02:26,160 --> 00:02:32,640\nDepois continua a olhar a carta.\n\n53\n00:02:30,519 --> 00:02:35,040\nPadre, diz frei Daniele, se \u00e9 verdadeira a\n\n54\n00:02:32,640 --> 00:02:38,599\nprimeira parte \u00e9 verdadeira tamb\u00e9m a segunda. E\n\n55\n00:02:35,040 --> 00:02:42,840\nPadre Pio, como est\u00e1 mortificado!\n\n56\n00:02:38,599 --> 00:02:42,840\ncom um aceno de cabe\u00e7a.\n";
 
     function parseSRT(srt) {
@@ -205,9 +213,11 @@ su Tv Sat al can">
 
     const legendasBar = mesclarParaBarra(legendas, 0.8, 130);
 
-    const display = document.getElementById('subtitle-display');
+    const display        = document.getElementById('subtitle-display');
+    const overlayText    = document.getElementById('subtitle-overlay-text');
     let intervalo = null;
 
+    // ─── YOUTUBE IFRAME API ───────────────────────────────────────────────
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     document.head.appendChild(tag);
@@ -231,10 +241,13 @@ su Tv Sat al can">
       if (!ytPlayer || !ytPlayer.getCurrentTime) return;
       const tempo = ytPlayer.getCurrentTime();
       const atual = legendasBar.find(l => tempo >= l.start && tempo <= l.end);
-      display.textContent = atual ? atual.text : '';
+      const texto = atual ? atual.text : '';
+      display.textContent     = texto;
+      overlayText.textContent = texto; // atualiza overlay fullscreen simultaneamente
     }
 
-    const slider = document.getElementById('font-size-slider');
+    // ─── CONTROLE DE FONTE ────────────────────────────────────────────────
+    const slider  = document.getElementById('font-size-slider');
     const fontVal = document.getElementById('font-size-value');
     display.style.fontSize = slider.value + 'px';
     slider.addEventListener('input', function() {
@@ -242,8 +255,9 @@ su Tv Sat al can">
       fontVal.textContent = this.value + 'px';
     });
 
+    // ─── TRANSCRIÇÃO COMPLETA ─────────────────────────────────────────────
     function toggleTranscricao() {
-      const div = document.getElementById('transcricao-completa');
+      const div   = document.getElementById('transcricao-completa');
       const texto = document.getElementById('transcricao-texto');
       if (div.style.display === 'none') {
         const PAUSA = 2.0;
@@ -265,19 +279,156 @@ su Tv Sat al can">
       }
     }
 
+    // ─── FULLSCREEN (FASE 2.1) ────────────────────────────────────────────
+    // Aplica fullscreen no video-container (não na página inteira)
     function toggleFullscreen() {
-      const container = document.querySelector('.video-container');
-      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-        (container.requestFullscreen || container.webkitRequestFullscreen).call(container);
+      const container = document.getElementById('video-container');
+      const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      if (!isFs) {
+        if (container.requestFullscreen)        container.requestFullscreen();
+        else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
       } else {
-        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+        if (document.exitFullscreen)        document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
       }
     }
 
+    // Sincroniza botão ao entrar/sair do fullscreen
+    function aoMudarFullscreen() {
+      const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      const btn  = document.getElementById('btn-fullscreen');
+      if (btn) btn.textContent = isFs ? '⛶ Sair da Tela Cheia' : '⛶ Tela Cheia c/ Legendas';
+    }
+    document.addEventListener('fullscreenchange',       aoMudarFullscreen);
+    document.addEventListener('webkitfullscreenchange', aoMudarFullscreen);
+
+    // ─── WAKE LOCK (FASE 2.2) ─────────────────────────────────────────────
+    let wakeLock = null;
+
+    async function ativarWakeLock() {
+      try {
+        if ('wakeLock' in navigator) {
+          wakeLock = await navigator.wakeLock.request('screen');
+          // Reativar automaticamente se a aba voltar ao foco
+          document.addEventListener('visibilitychange', async () => {
+            if (document.visibilityState === 'visible' && wakeLock !== null) {
+              try { wakeLock = await navigator.wakeLock.request('screen'); } catch(e) {}
+            }
+          }, { once: true });
+        }
+      } catch(e) {
+        // iOS Safari e outros que não suportam — silent fail (graceful degradation)
+      }
+    }
+
+    async function liberarWakeLock() {
+      try {
+        if (wakeLock) { await wakeLock.release(); wakeLock = null; }
+      } catch(e) {}
+    }
+
+    // Libera Wake Lock ao sair da página
+    window.addEventListener('beforeunload', liberarWakeLock);
+
+    // ─── DETECÇÃO DE PLATAFORMA (FASE 2.3) ───────────────────────────────
+    function detectarPlataforma() {
+      const ua = navigator.userAgent;
+      if (/Android/i.test(ua))           return 'android';
+      if (/iPhone|iPad|iPod/i.test(ua))  return 'ios';
+      return 'desktop';
+    }
+
+    const INSTRUCOES_TV = {
+      android: '📡 No Chrome: toque nos 3 pontinhos → "Transmitir..." → selecione sua TV',
+      ios:     '📺 No iPhone/iPad: Central de Controle → Espelhamento de Tela → selecione sua Apple TV',
+      desktop: '📡 No Chrome: clique nos 3 pontinhos → "Transmitir..." → selecione sua TV ou Chromecast'
+    };
+
+    let instrucaoTimeout = null;
+
+    function exibirInstrucaoTV() {
+      const plataforma = detectarPlataforma();
+      const el    = document.getElementById('instrucao-tv');
+      const texto = document.getElementById('instrucao-tv-texto');
+      if (el && texto) {
+        texto.textContent = INSTRUCOES_TV[plataforma] || INSTRUCOES_TV.desktop;
+        el.style.display = 'flex';
+        // Fecha automaticamente após 10 segundos
+        clearTimeout(instrucaoTimeout);
+        instrucaoTimeout = setTimeout(() => { el.style.display = 'none'; }, 10000);
+      }
+    }
+
+    function fecharInstrucaoTV() {
+      const el = document.getElementById('instrucao-tv');
+      if (el) el.style.display = 'none';
+      clearTimeout(instrucaoTimeout);
+    }
+
+    // ─── TV MODE UNIFICADO (FASE 2.2 + 2.3) ─────────────────────────────
+    async function ativarModoTV() {
+      // 1. Fullscreen no container de vídeo
+      const container = document.getElementById('video-container');
+      try {
+        if (container.requestFullscreen)           await container.requestFullscreen();
+        else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+      } catch(e) {}
+
+      // 2. Wake Lock (tela não apaga)
+      await ativarWakeLock();
+
+      // 3. Instrução contextual por plataforma
+      exibirInstrucaoTV();
+    }
+
+    // Libera Wake Lock ao sair do fullscreen
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        liberarWakeLock();
+      }
+    });
+
+    // ─── COPIAR LINK ──────────────────────────────────────────────────────
     function copiarLink() {
       navigator.clipboard.writeText(window.location.href).then(() => {
         alert('Link copiado!');
       });
+    }
+
+    // ─── BANNER WEBVIEW WHATSAPP (FASE 3.2) ──────────────────────────────
+    (function detectarWebView() {
+      const ua = navigator.userAgent;
+      // Detecta WebView do WhatsApp, Instagram, Facebook e similares
+      const isWebView =
+        /FBAN|FBAV|Instagram|WhatsApp/.test(ua) ||
+        (/wv/.test(ua) && /Android/.test(ua)) ||
+        (typeof window.matchMedia === 'function' &&
+         window.matchMedia('(display-mode: browser)').matches &&
+         /Safari/i.test(ua) && !/Chrome/i.test(ua) &&
+         window.navigator.standalone === false);
+
+      if (!isWebView) return;
+
+      const banner = document.getElementById('webview-banner');
+      const link   = document.getElementById('webview-chrome-link');
+
+      // Android: intent para abrir no Chrome
+      // iOS: instrução manual (sem suporte a intent://)
+      if (/Android/i.test(ua)) {
+        const pageUrl = encodeURIComponent(window.location.href);
+        link.href = `intent://${window.location.host}${window.location.pathname}#Intent;scheme=${window.location.protocol.replace(':','')};package=com.android.chrome;end`;
+      } else {
+        link.textContent = 'Abrir no Safari (e depois "Adicionar à Tela Inicial")';
+        link.href = window.location.href;
+        link.target = '_blank';
+      }
+
+      banner.style.display = 'flex';
+    })();
+
+    // ─── SERVICE WORKER (FASE 3.1) ────────────────────────────────────────
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('../../service-worker.js').catch(() => {});
     }
   </script>
 

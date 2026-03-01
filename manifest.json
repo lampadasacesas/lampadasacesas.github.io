@@ -1,0 +1,27 @@
+{
+  "name": "Lâmpadas Acesas",
+  "short_name": "Lâmpadas",
+  "description": "Evangelização católica com legendas em português brasileiro",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f0e8",
+  "theme_color": "#5a0000",
+  "lang": "pt-BR",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "religion"],
+  "screenshots": []
+}
