@@ -48,9 +48,14 @@
 
   </section>
 
+  <section class="busca-secao">
+    <input type="search" id="busca" class="busca-input"
+           placeholder="Buscar vídeos por título ou canal...">
+  </section>
+
   <main>
     <h2 class="section-title">📺 Vídeos Legendados</h2>
-    <div class="video-grid">
+    <div class="video-grid" id="video-grid">
       
       <article class="video-card">
         <a href="videos/padre-cano/1-introduccion-manuel-vargas.html">
@@ -134,6 +139,7 @@
         </a>
       </article>
     </div>
+    <div class="video-grid" id="search-results" style="display:none"></div>
   </main>
 
   <footer class="site-footer">
@@ -146,6 +152,62 @@
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js').catch(() => { });
     }
+  </script>
+
+  <script>
+    // Busca JS — Fase 3 (search_index.json minificado)
+    (function () {
+      var idx = null;
+      var input = document.getElementById('busca');
+      var grid = document.getElementById('video-grid');
+      var srGrid = document.getElementById('search-results');
+
+      function cardHtml(v) {
+        var img = v.i
+          ? '<img src="' + v.i + '" alt="' + v.t.replace(/"/g, '') + '" loading="lazy" onerror="this.style.display=\'none\'">'
+          : '<div class="card-thumb-placeholder"></div>';
+        return '<article class="video-card">'
+          + '<a href="videos/' + v.c + '/' + v.s + '.html">'
+          + img
+          + '<div class="card-info"><h3>' + v.t + '</h3>'
+          + '<small>' + v.d + '</small>'
+          + '</div></a></article>';
+      }
+
+      function fetchIdx(cb) {
+        fetch('catalog/search_index.json')
+          .then(function (r) { return r.json(); })
+          .then(function (data) { idx = data; if (cb) cb(); })
+          .catch(function () { });
+      }
+
+      function doSearch(q) {
+        if (!q) {
+          grid.style.display = '';
+          srGrid.style.display = 'none';
+          srGrid.innerHTML = '';
+          return;
+        }
+        var ql = q.toLowerCase();
+        var matches = (idx || []).filter(function (v) {
+          return v.t.toLowerCase().indexOf(ql) !== -1
+            || (v.ch && v.ch.toLowerCase().indexOf(ql) !== -1);
+        });
+        grid.style.display = 'none';
+        srGrid.style.display = '';
+        srGrid.innerHTML = matches.length
+          ? matches.map(cardHtml).join('')
+          : '<p class="empty">Nenhum resultado para "' + q + '"</p>';
+      }
+
+      input.addEventListener('input', function () {
+        var q = input.value.trim();
+        if (!idx && q) { fetchIdx(function () { doSearch(q); }); return; }
+        doSearch(q);
+      });
+
+      fetchIdx(); // pre-carrega indice em background
+    })();
   </script>
 </body>
 
