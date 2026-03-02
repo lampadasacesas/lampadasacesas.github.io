@@ -108,6 +108,12 @@
           ▶ Pressione play para ver as legendas sincronizadas
         </div>
       </div>
+
+      <!-- INSTRUÇÃO TV (Fase 2.3) — dentro do container p/ visibilidade em fullscreen -->
+      <div id="instrucao-tv" class="instrucao-tv" style="display:none">
+        <span id="instrucao-tv-texto"></span>
+        <button onclick="fecharInstrucaoTV()" class="instrucao-tv-close">✕</button>
+      </div>
     </div>
 
     <!-- CONTROLES DE LEGENDA -->
@@ -123,12 +129,6 @@
       <a href="https://www.youtube.com/watch?v=PEkn_CQOhfc" target="_blank" class="btn-original">
         📺 Ver no YouTube original
       </a>
-    </div>
-
-    <!-- INSTRUÇÃO TV (Fase 2.3) — aparece após ativar TV Mode -->
-    <div id="instrucao-tv" class="instrucao-tv" style="display:none">
-      <span id="instrucao-tv-texto"></span>
-      <button onclick="fecharInstrucaoTV()" class="instrucao-tv-close">✕</button>
     </div>
 
     <!-- TRANSCRIÇÃO COMPLETA (oculta por padrão) -->
@@ -246,13 +246,38 @@
       overlayText.textContent = texto; // atualiza overlay fullscreen simultaneamente
     }
 
-    // ─── CONTROLE DE FONTE ────────────────────────────────────────────────
+    // ─── CONTROLE DE FONTE (Componente 4 — fullscreen + persistencia) ─────
     const slider  = document.getElementById('font-size-slider');
     const fontVal = document.getElementById('font-size-value');
-    display.style.fontSize = slider.value + 'px';
+    // Restaurar preferencia salva ou usar valor inicial do slider
+    const savedSize = localStorage.getItem('lampadasFontSize');
+    if (savedSize) {
+      slider.value = savedSize;
+      display.style.fontSize = savedSize + 'px';
+      overlayText.style.fontSize = savedSize + 'px';
+      fontVal.textContent = savedSize + 'px';
+    } else {
+      display.style.fontSize = slider.value + 'px';
+    }
     slider.addEventListener('input', function() {
-      display.style.fontSize = this.value + 'px';
-      fontVal.textContent = this.value + 'px';
+      const size = this.value + 'px';
+      display.style.fontSize = size;
+      overlayText.style.fontSize = size;   // controla overlay fullscreen
+      fontVal.textContent = size;
+      localStorage.setItem('lampadasFontSize', this.value);
+    });
+    // Ajuste automatico por orientacao (apenas se usuario nao escolheu tamanho)
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        const isLandscape = window.innerWidth > window.innerHeight;
+        const baseSize = isLandscape ? 22 : 16;
+        if (!localStorage.getItem('lampadasFontSize')) {
+          slider.value = baseSize;
+          display.style.fontSize = baseSize + 'px';
+          overlayText.style.fontSize = baseSize + 'px';
+          fontVal.textContent = baseSize + 'px';
+        }
+      }, 300);
     });
 
     // ─── TRANSCRIÇÃO COMPLETA ─────────────────────────────────────────────
@@ -430,6 +455,68 @@
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('../../service-worker.js').catch(() => {});
     }
+
+    // ─── ANALYTICS COMPLETO (Componente 10 — v2.0) ───────────────────────
+    // 1. Compartilhamento
+    document.querySelectorAll('.btn-share').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const method = btn.classList.contains('btn-whatsapp') ? 'WhatsApp'
+                     : btn.classList.contains('btn-telegram') ? 'Telegram' : 'copy_link';
+        gtag('event', 'share', { method, content_type: 'video', item_id: 'PEkn_CQOhfc' });
+      });
+    });
+    // 2. Transcricao
+    document.getElementById('btn-transcricao')?.addEventListener('click', () => {
+      gtag('event', 'transcricao_toggle', { event_category: 'Engajamento', video_id: 'PEkn_CQOhfc' });
+    });
+    // 3. TV Mode
+    document.getElementById('btn-tv-mode')?.addEventListener('click', () => {
+      gtag('event', 'tv_mode_ativado', { event_category: 'TV', event_label: detectarPlataforma(), video_id: 'PEkn_CQOhfc' });
+    });
+    // 4. Fullscreen
+    document.addEventListener('fullscreenchange', () => {
+      const isFs = !!document.fullscreenElement;
+      gtag('event', isFs ? 'fullscreen_entrou' : 'fullscreen_saiu', { event_category: 'TV', video_id: 'PEkn_CQOhfc' });
+    });
+    // 5. Font size (dispara ao soltar o slider — debounced)
+    if (slider) { let _ft; slider.addEventListener('change', function() {
+      clearTimeout(_ft); _ft = setTimeout(() => {
+        gtag('event', 'fonte_alterada', { event_category: 'Preferencias', value: +this.value, video_id: 'PEkn_CQOhfc' });
+      }, 500);
+    }); }
+    // 6. WebView banner exibido
+    if (document.getElementById('webview-banner')?.style.display !== 'none') {
+      gtag('event', 'webview_banner_shown', { event_category: 'WebView', video_id: 'PEkn_CQOhfc' });
+    }
+    // 7. Legendas assistidas (ao sair da pagina)
+    let _lStart = null, _lCount = 0;
+    const _origAtualizar = atualizarLegenda;
+    atualizarLegenda = function() {
+      _origAtualizar();
+      if (display.textContent && display.textContent.trim()) {
+        _lCount++;
+        if (!_lStart) _lStart = Date.now();
+      }
+    };
+    window.addEventListener('beforeunload', () => {
+      if (_lStart) {
+        gtag('event', 'legendas_assistidas', {
+          event_category: 'Engajamento',
+          video_id: 'PEkn_CQOhfc',
+          legendas_vistas: _lCount,
+          duracao_segundos: Math.round((Date.now() - _lStart) / 1000),
+          plataforma: detectarPlataforma(),
+          orientacao: innerWidth > innerHeight ? 'landscape' : 'portrait',
+          font_size: +(slider ? slider.value : 22)
+        });
+      }
+    });
+    // 8. Erro no player (iframe)
+    window.addEventListener('error', e => {
+      if (e.target && e.target.tagName === 'IFRAME') {
+        gtag('event', 'player_error', { event_category: 'Erro', video_id: 'PEkn_CQOhfc' });
+      }
+    }, true);
   </script>
 
 </body>

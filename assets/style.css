@@ -243,6 +243,7 @@ main {
 
 /* Player responsivo 16:9 */
 .video-container {
+  position: relative;           /* ancora o #instrucao-tv absoluto */
   background: #000;
   border-radius: var(--raio);
   overflow: hidden;
@@ -427,16 +428,24 @@ main {
 
 /* ── INSTRUÇÃO TV (FASE 2.3) ─────────────────────────────────── */
 .instrucao-tv {
+  /* Overlay: ancora no .video-container (position:relative) */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  /* Layout interno */
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  /* Visual */
   background: #1a1a2e;
   color: #FFD700;
-  border: 1px solid #c8a020;
-  border-radius: var(--raio);
+  border: none;
+  border-bottom: 1px solid #c8a020;
+  border-radius: 0;
   padding: 14px 20px;
-  margin-bottom: 16px;
   font-size: 0.95rem;
   font-weight: 500;
   box-shadow: 0 2px 12px rgba(0,0,0,0.3);
