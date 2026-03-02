@@ -4,8 +4,8 @@
 // Fase 3.1 — PWA
 // =============================================================================
 
-const CACHE_NAME    = 'lampadas-v3.1.0';
-const CACHE_STATIC  = 'lampadas-static-v3.1.0';
+const CACHE_NAME    = 'lampadas-v3.3.1';
+const CACHE_STATIC  = 'lampadas-static-v3.3.1';
 
 // Assets estáticos sempre em cache
 const STATIC_ASSETS = [
