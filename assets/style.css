@@ -644,3 +644,80 @@ main {
     padding: 12px 18px;
   }
 }
+
+/* ── FASE 3: BUSCA ───────────────────────────────────────────────── */
+.busca-secao {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 16px 24px 4px;
+}
+
+.busca-input {
+  width: 100%;
+  padding: 12px 18px;
+  border: 2px solid var(--cor-borda);
+  border-radius: 30px;
+  font-size: 1rem;
+  font-family: var(--fonte-corpo);
+  background: var(--cor-card);
+  color: var(--cor-texto);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.busca-input:focus {
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 3px rgba(122, 0, 0, 0.12);
+}
+
+.busca-input::placeholder { color: var(--cor-texto2); }
+
+/* ── FASE 3: PAGINACAO ───────────────────────────────────────────── */
+.paginacao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 28px 16px 16px;
+  flex-wrap: wrap;
+}
+
+.pag-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  background: var(--cor-card);
+  color: var(--cor-primaria);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.pag-link:hover {
+  background: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+  color: #fff;
+  text-decoration: none;
+}
+
+.pag-link.pag-ativa {
+  background: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+  color: #fff;
+  cursor: default;
+  pointer-events: none;
+}
+
+.pag-prev, .pag-next { font-size: 0.85rem; }
+
+@media (max-width: 480px) {
+  .busca-secao { padding: 12px 16px 4px; }
+  .busca-input { font-size: 0.95rem; padding: 10px 14px; }
+  .pag-link { min-width: 34px; height: 34px; font-size: 0.85rem; }
+}
