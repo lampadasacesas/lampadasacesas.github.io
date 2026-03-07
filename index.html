@@ -3,6 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.youtube.com https://s.ytimg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com; img-src 'self' https://i.ytimg.com https://img.youtube.com data:; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com;">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lâmpadas Acesas — Evangelização Católica em PT-BR</title>
   <meta name="description" content="Evangelização católica com legendas em português brasileiro">
@@ -50,8 +52,7 @@
   </section>
 
   <section class="busca-secao">
-    <input type="search" id="busca" class="busca-input"
-           placeholder="Buscar vídeos por título ou canal...">
+    <input type="search" id="busca" class="busca-input" placeholder="Buscar vídeos por título ou canal...">
   </section>
 
   <main>
@@ -157,12 +158,22 @@
           </div>
         </a>
       </article>
+      <article class="video-card">
+        <a href="videos/padre-pio/padre-pio-chi-non-prega-non-ha-bisogno.html">
+          <img src="assets/thumbnails/xdFVAHSSLvw.jpg" alt="Padre Pio: quem não reza não precisa do diabo para se condenar, vai ao inferno pelas próprias pernas" loading="lazy">
+          <div class="card-info">
+            <span class="cat-badge">Padre Pio</span>
+            <h3>Padre Pio: quem não reza não precisa do diabo para se condenar, vai ao inferno pelas próprias pernas</h3>
+          </div>
+        </a>
+      </article>
     </div>
     <div class="video-grid" id="search-results" style="display:none"></div>
   </main>
 
   <footer class="site-footer">
-    <p><img src="assets/lampada-acesa.jpg" class="logo-icon" alt=""> Lâmpadas Acesas — Evangelização Católica em Português Brasileiro</p>
+    <p><img src="assets/lampada-acesa.jpg" class="logo-icon" alt=""> Lâmpadas Acesas — Evangelização Católica em Português
+      Brasileiro</p>
     <p><small>Legendas geradas com IA. Conteúdo original dos respectivos canais.</small></p>
   </footer>
 
