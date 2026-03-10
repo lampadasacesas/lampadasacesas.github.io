@@ -192,29 +192,50 @@
 
     const legendas = parseSRT(SRT_DATA);
 
-    function mesclarParaBarra(segs, maxGap, maxChars) {
-      const result = [];
-      let i = 0;
-      while (i < segs.length) {
-        let texto = segs[i].text;
-        let inicio = segs[i].start;
-        let fim = segs[i].end;
-        while (
-          i + 1 < segs.length &&
-          (segs[i+1].start - segs[i].end) <= maxGap &&
-          (texto + ' ' + segs[i+1].text).length <= maxChars
-        ) {
-          i++;
-          texto += ' ' + segs[i].text;
-          fim = segs[i].end;
-        }
-        result.push({ start: inicio, end: fim, text: texto });
-        i++;
+    function mesclarParaBarra(legendas, gapMax, maxLinhasVisuais, maxCharsLinha) {
+      gapMax            = (gapMax            !== undefined) ? gapMax            : 0.8;
+      maxLinhasVisuais  = (maxLinhasVisuais  !== undefined) ? maxLinhasVisuais  : 2;
+      maxCharsLinha     = (maxCharsLinha     !== undefined) ? maxCharsLinha     : 58;
+
+      if (!legendas || legendas.length === 0) return [];
+
+      // Conta quantas linhas visuais um texto vai ocupar na barra
+      function linhasVisuais(texto) {
+          return texto.split('\n').reduce(function(acc, linha) {
+              // Linha vazia conta como 0; qualquer conteudo conta pelo menos 1
+              return acc + Math.ceil(Math.max(linha.length, 1) / maxCharsLinha);
+          }, 0);
       }
-      return result;
+
+      var merged = [];
+      var grupo  = null;
+
+      for (var i = 0; i < legendas.length; i++) {
+          var leg = legendas[i];
+          if (!grupo) {
+              grupo = { start: leg.start, end: leg.end, text: leg.text };
+              continue;
+          }
+
+          var gap           = leg.start - grupo.end;
+          var textoMergeado = grupo.text + '\n' + leg.text;
+          var linhas        = linhasVisuais(textoMergeado);
+
+          if (gap <= gapMax && linhas <= maxLinhasVisuais) {
+              // Cabe: mesclar
+              grupo.end  = leg.end;
+              grupo.text = textoMergeado;
+          } else {
+              // Nao cabe: fechar grupo atual e iniciar novo
+              merged.push(grupo);
+              grupo = { start: leg.start, end: leg.end, text: leg.text };
+          }
+      }
+      if (grupo) merged.push(grupo);
+      return merged;
     }
 
-    const legendasBar = mesclarParaBarra(legendas, 0.8, 130);
+    const legendasBar = mesclarParaBarra(legendas, 0.8, 2, 58);
 
     const display        = document.getElementById('subtitle-display');
     const overlayText    = document.getElementById('subtitle-overlay-text');
