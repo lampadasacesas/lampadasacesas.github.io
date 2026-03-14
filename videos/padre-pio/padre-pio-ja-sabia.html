@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.youtube.com https://s.ytimg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com; img-src 'self' https://i.ytimg.com https://img.youtube.com data:; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com;">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Padre Pio já sabia | Lâmpadas Acesas</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Padre Pio já sabia! Mergulhe nesta história incrível de fé e providência divina, onde o santo atendeu um pedido antes mesmo de ser enviado. Inspire-se!">
+  <meta name="keywords" content="católico, evangelização, legenda português, padre pio">
+  <meta name="author" content="Lâmpadas Acesas">
+
+  <!-- Open Graph (preview no WhatsApp, Telegram, Facebook) -->
+  <meta property="og:type"        content="video.other">
+  <meta property="og:title"       content="Padre Pio já sabia | Lâmpadas Acesas">
+  <meta property="og:description" content="Padre Pio já sabia! Mergulhe nesta história incrível de fé e providência divina, onde o santo atendeu um pedido antes mesmo de ser enviado. Inspire-se!">
+  <meta property="og:image"       content="https://lampadasacesas.com.br/assets/thumbnails/DeOqqX3EJnM.jpg">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="720">
+  <meta property="og:url"         content="https://lampadasacesas.com.br/videos/padre-pio/padre-pio-ja-sabia">
+  <meta property="og:site_name"   content="Lâmpadas Acesas">
+  <meta property="og:locale"      content="pt_BR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Padre Pio já sabia">
+  <meta name="twitter:description" content="Padre Pio já sabia! Mergulhe nesta história incrível de fé e providência divina, onde o santo atendeu um pedido antes mesmo de ser enviado. Inspire-se!">
+  <meta name="twitter:image"       content="https://lampadasacesas.com.br/assets/thumbnails/DeOqqX3EJnM.jpg">
+
+  <!-- PWA -->
+  <link rel="manifest" href="../../manifest.json">
+  <meta name="theme-color" content="#5a0000">
+  <link rel="apple-touch-icon" href="../../assets/icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" href="../../assets/favicon.ico" type="image/x-icon">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../../assets/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G8LLHBT6XH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-G8LLHBT6XH');
+  </script>
+</head>
+<body>
+
+  <!-- BANNER WEBVIEW (Fase 3.2) — visivel apenas no navegador interno do WhatsApp/Instagram -->
+  <div id="webview-banner" class="webview-banner" style="display:none">
+    <span>📱 Para melhor experiência (legendas + Chromecast):</span>
+    <a id="webview-chrome-link" href="#" class="webview-btn">Abrir no Chrome</a>
+    <button onclick="document.getElementById('webview-banner').style.display='none'" class="webview-close">✕</button>
+  </div>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <a href="../../index.html" class="logo">
+      <img src="../../assets/lampada-acesa.jpg" class="logo-icon" alt=""> Lâmpadas Acesas
+    </a>
+    <nav>
+      <a href="../../index.html">Início</a>
+      <a href="../padre-pio/index.html">Padre Pio</a>
+    </nav>
+  </header>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="../../index.html">Início</a>
+    <span>›</span>
+    <a href="../padre-pio/index.html">Padre Pio</a>
+    <span>›</span>
+    <span>Padre Pio já sabia</span>
+  </div>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="video-page">
+
+    <!-- TÍTULO -->
+    <h1 class="video-title">Padre Pio já sabia</h1>
+    <p class="video-meta">📺 Padre Pio TV &nbsp;|&nbsp; 📅 Legendado em 13/03/2026 &nbsp;|&nbsp; 🌐 Legenda: PT-BR</p>
+
+    <!-- PLAYER DO YOUTUBE -->
+    <div class="video-container" id="video-container">
+      <div class="video-wrapper" id="video-wrapper">
+        <iframe
+          id="yt-player"
+          src="https://www.youtube.com/embed/DeOqqX3EJnM?rel=0&modestbranding=1&cc_load_policy=0&enablejsapi=1"
+          title="Padre Pio já sabia"
+          frameborder="0"
+          allowfullscreen
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
+        </iframe>
+
+        <!-- OVERLAY DE LEGENDA ESTILO NETFLIX (Fase 2.1) -->
+        <!-- Visível apenas em fullscreen via classe CSS :fullscreen -->
+        <div class="subtitle-overlay" id="subtitle-overlay" aria-live="polite">
+          <span class="subtitle-overlay-text" id="subtitle-overlay-text"></span>
+        </div>
+      </div>
+
+      <!-- LEGENDA SINCRONIZADA — BARRA ABAIXO (modo normal) -->
+      <div class="subtitle-bar">
+        <div id="subtitle-display" class="subtitle-text">
+          ▶ Pressione play para ver as legendas sincronizadas
+        </div>
+      </div>
+
+      <!-- INSTRUÇÃO TV (Fase 2.3) — dentro do container p/ visibilidade em fullscreen -->
+      <div id="instrucao-tv" class="instrucao-tv" style="display:none">
+        <span id="instrucao-tv-texto"></span>
+        <button onclick="fecharInstrucaoTV()" class="instrucao-tv-close">✕</button>
+      </div>
+    </div>
+
+    <!-- CONTROLES DE LEGENDA -->
+    <div class="subtitle-controls">
+      <label>Tamanho da fonte:
+        <input type="range" id="font-size-slider" min="12" max="32" value="22">
+        <span id="font-size-value">22px</span>
+      </label>
+      <button id="btn-transcricao" onclick="toggleTranscricao()">📖 Ver transcrição completa</button>
+      <button id="btn-fullscreen" onclick="toggleFullscreen()">⛶ Tela Cheia c/ Legendas</button>
+      <!-- Botão TV Mode (Fase 2.2) -->
+      <button id="btn-tv-mode" onclick="ativarModoTV()">📺 Assistir na TV</button>
+      <a href="https://www.youtube.com/watch?v=DeOqqX3EJnM" target="_blank" class="btn-original">
+        📺 Ver no YouTube original
+      </a>
+    </div>
+
+    <!-- TRANSCRIÇÃO COMPLETA (oculta por padrão) -->
+    <div id="transcricao-completa" class="transcricao" style="display:none">
+      <h2>📖 Transcrição completa em PT-BR</h2>
+      <div id="transcricao-texto"></div>
+    </div>
+
+    <!-- Navegacao de serie -- vazio se video nao pertencer a nenhuma serie -->
+    
+
+    <!-- COMPARTILHAR -->
+    <div class="share-section">
+      <h3>📢 Compartilhar esta evangelização</h3>
+      <div class="share-buttons">
+        <a href="https://wa.me/?text=Padre%20Pio%20j%C3%A1%20sabia%20-%20Legendado%20em%20PT-BR%0Ahttps%3A//lampadasacesas.com.br/videos/padre-pio/padre-pio-ja-sabia"
+           target="_blank" class="btn-share btn-whatsapp">
+          📱 WhatsApp
+        </a>
+        <a href="https://t.me/share/url?url=https%3A//lampadasacesas.com.br/videos/padre-pio/padre-pio-ja-sabia&text=Padre%20Pio%20j%C3%A1%20sabia%20-%20Legendado%20em%20PT-BR"
+           target="_blank" class="btn-share btn-telegram">
+          ✈️ Telegram
+        </a>
+        <button onclick="copiarLink()" class="btn-share btn-copy">
+          🔗 Copiar link
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p><img src="../../assets/lampada-acesa.jpg" class="logo-icon" alt=""> Lâmpadas Acesas — Evangelização Católica em Português Brasileiro</p>
+    <p><small>Legendas geradas automaticamente com IA e revisão. Conteúdo original dos respectivos canais.</small></p>
+  </footer>
+
+  <!-- ===================================================================
+       SCRIPTS
+       =================================================================== -->
+  <script>
+    // ─── DADOS SRT ────────────────────────────────────────────────────────
+    const SRT_DATA = "1\n00:00:05,400 --> 00:00:06,900\nUm minuto com Padre Pio,\n\n2\n00:00:07,000 --> 00:00:11,250\ndos lugares do convento de San\nGiovanni Rotondo, para contar a voc\u00eas,\n\n3\n00:00:11,350 --> 00:00:14,162\natrav\u00e9s deste texto\n'Beata Teppietre il Cina',\n\n4\n00:00:14,262 --> 00:00:18,824\nalguns relatos que v\u00eam diretamente dos\nconterr\u00e2neos de Padre Pio Pucinari,\n\n5\n00:00:18,924 --> 00:00:24,924\nque h\u00e1 muitos anos entregaram a padre\nAlessandro D'Aripa Bottoni e padre da\n\n6\n00:00:25,100 --> 00:00:26,287\nmuitos testemunhos,\n\n7\n00:00:26,387 --> 00:00:29,839\ne eles os registraram\nneste texto dos anos 70.\n\n8\n00:00:29,939 --> 00:00:35,939\nHoje, queremos contar um\nepis\u00f3dio da senhora Zaira que,\n\n9\n00:00:38,340 --> 00:00:41,380\nem 1932, junto ao marido,\n\n10\n00:00:41,480 --> 00:00:50,020\nse viu inocentemente envolvida na fal\u00eancia\nde um banco local por cont\u00ednuas faltas.\n\n11\n00:00:50,120 --> 00:00:54,995\nPor isso, ela precisava urgentemente de\nalgumas informa\u00e7\u00f5es que s\u00f3 poderiam ser\n\n12\n00:00:55,095 --> 00:00:57,595\nfornecidas pelo doutor Mario Di Giacomo,\n\n13\n00:00:57,695 --> 00:00:59,695\nmuito apegado a Padre Pio e que,\n\n14\n00:00:59,795 --> 00:01:02,732\nnaquele per\u00edodo, estava\nem San Giovanni Rotondo.\n\n15\n00:01:02,832 --> 00:01:05,959\nPara solicitar o doutor, o marido da\nsenhora Zaira escreveu uma carta ao...\n\n16\n00:01:06,059 --> 00:01:07,380\n...capuchinho.\n\n17\n00:01:07,480 --> 00:01:10,855\n'Tal carta', escreve a senhora\nZaira, 'ele me entregou.\n\n18\n00:01:10,955 --> 00:01:15,642\nEu, por minha parte, a coloquei sobre\na escrivaninha para que fosse postada.\n\n19\n00:01:15,742 --> 00:01:18,540\nN\u00e3o sei por qual motivo,\nmas esqueci a carta,\n\n20\n00:01:18,640 --> 00:01:23,796\nainda mais porque a empregada havia\namontoado outros pap\u00e9is sobre ela'.\n\n21\n00:01:25,096 --> 00:01:29,408\nDepois de dois dias, o doutor Di\nGiacomo chegou at\u00e9 n\u00f3s, o qual disse:\n\n22\n00:01:29,508 --> 00:01:32,383\n'Padre Pio me mandou com\ntoda a pressa dizendo:\n\n23\n00:01:32,483 --> 00:01:36,045\ncorre, corre a Pietrelcina\nporque o doutor Crafa, Rodrigo,\n\n24\n00:01:36,145 --> 00:01:37,956\nou seja, o marido de\nZaira, precisa de voc\u00ea'.\n\n25\n00:01:38,056 --> 00:01:44,056\nSua vinda foi de grande ajuda,\nde conforto, escreve ainda Zaira.\n\n26\n00:01:44,536 --> 00:01:46,456\nV\u00e1rios dias se passaram,\n\n27\n00:01:46,556 --> 00:01:50,916\npensei em arrumar um pouco a\nescrivaninha e qual foi a minha surpresa?\n\n28\n00:01:52,556 --> 00:01:58,376\nFoi a de encontrar a carta endere\u00e7ada\na Padre Pio, selada e ainda por enviar.\n\n29\n00:01:58,996 --> 00:02:02,276\n'Como Padre Pio havia\nadivinhado nossas necessidades?\n\n30\n00:02:02,376 --> 00:02:04,096\n', escreve a senhora Zaira.\n\n31\n00:02:04,196 --> 00:02:09,116\n'Crescia em n\u00f3s a venera\u00e7\u00e3o, a\nf\u00e9, especialmente em meu marido,\n\n32\n00:02:09,216 --> 00:02:11,528\nque n\u00e3o era muito apegado \u00e0 religi\u00e3o,\n\n33\n00:02:11,628 --> 00:02:17,096\nmas que depois o Senhor o chamou de volta\nbem preparado e com todos os sacramentos'.\n\n34\n00:02:17,596 --> 00:02:21,075\nPara mim, o m\u00e9rito foi apenas\ndo nosso amado Padre Pio.\n\n35\n00:02:34,596 --> 00:02:36,695\nObrigado a todos.\n";
+
+    function parseSRT(srt) {
+      const blocks = srt.trim().split(/\r?\n\r?\n/);
+      return blocks.map(block => {
+        const lines = block.trim().split(/\r?\n/);
+        if (lines.length < 3) return null;
+        const timeLine = lines[1].trim();
+        const match = timeLine.match(/(\d+):(\d+):(\d+)[,\.](\d+) -{2}> (\d+):(\d+):(\d+)[,\.](\d+)/);
+        if (!match) return null;
+        const toSec = (h, m, s, ms) => parseInt(h)*3600 + parseInt(m)*60 + parseInt(s) + parseInt(ms)/1000;
+        return {
+          start: toSec(match[1], match[2], match[3], match[4]),
+          end:   toSec(match[5], match[6], match[7], match[8]),
+          text:  lines.slice(2).map(l => l.trim()).filter(Boolean).join(' ')
+        };
+      }).filter(Boolean);
+    }
+
+    const legendas = parseSRT(SRT_DATA);
+
+    function mesclarParaBarra(legendas, gapMax, maxLinhasVisuais, maxCharsLinha) {
+      gapMax            = (gapMax            !== undefined) ? gapMax            : 0.8;
+      maxLinhasVisuais  = (maxLinhasVisuais  !== undefined) ? maxLinhasVisuais  : 2;
+      maxCharsLinha     = (maxCharsLinha     !== undefined) ? maxCharsLinha     : 58;
+
+      if (!legendas || legendas.length === 0) return [];
+
+      // Conta quantas linhas visuais um texto vai ocupar na barra
+      function linhasVisuais(texto) {
+          return texto.split('\n').reduce(function(acc, linha) {
+              // Linha vazia conta como 0; qualquer conteúdo conta pelo menos 1
+              return acc + (linha.length > 0 ? Math.ceil(linha.length / maxCharsLinha) : 0);
+          }, 0);
+      }
+
+      var merged = [];
+      var grupo  = null;
+
+      for (var i = 0; i < legendas.length; i++) {
+          var leg = legendas[i];
+          if (!grupo) {
+              grupo = { start: leg.start, end: leg.end, text: leg.text };
+              continue;
+          }
+
+          var gap           = leg.start - grupo.end;
+          var textoMergeado = grupo.text + '\n' + leg.text;
+          var linhas        = linhasVisuais(textoMergeado);
+
+          if (gap <= gapMax && linhas <= maxLinhasVisuais) {
+              // Cabe: mesclar
+              grupo.end  = leg.end;
+              grupo.text = textoMergeado;
+          } else {
+              // Não cabe: fechar grupo atual e iniciar novo
+              merged.push(grupo);
+              grupo = { start: leg.start, end: leg.end, text: leg.text };
+          }
+      }
+      if (grupo) merged.push(grupo);
+      return merged;
+    }
+
+    const legendasBar = mesclarParaBarra(legendas, 0.8, 2, 58);
+
+    const display        = document.getElementById('subtitle-display');
+    const overlayText    = document.getElementById('subtitle-overlay-text');
+    let intervalo = null;
+
+    // ─── YOUTUBE IFRAME API ───────────────────────────────────────────────
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+
+    var ytPlayer;
+    function onYouTubeIframeAPIReady() {
+      ytPlayer = new YT.Player('yt-player', {
+        events: { 'onStateChange': onPlayerStateChange }
+      });
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.PLAYING) {
+        intervalo = setInterval(atualizarLegenda, 200);
+      } else {
+        clearInterval(intervalo);
+      }
+    }
+
+    function atualizarLegenda() {
+      if (!ytPlayer || !ytPlayer.getCurrentTime) return;
+      const tempo = ytPlayer.getCurrentTime();
+      const atual = legendasBar.find(l => tempo >= l.start && tempo <= l.end);
+      const texto = atual ? atual.text : '';
+      display.textContent     = texto;
+      overlayText.textContent = texto; // atualiza overlay fullscreen simultaneamente
+    }
+
+    // ─── CONTROLE DE FONTE (Componente 4 — fullscreen + persistencia) ─────
+    const slider  = document.getElementById('font-size-slider');
+    const fontVal = document.getElementById('font-size-value');
+    // Restaurar preferencia salva ou usar valor inicial do slider
+    const savedSize = localStorage.getItem('lampadasFontSize');
+    if (savedSize) {
+      slider.value = savedSize;
+      display.style.fontSize = savedSize + 'px';
+      overlayText.style.fontSize = savedSize + 'px';
+      fontVal.textContent = savedSize + 'px';
+    } else {
+      display.style.fontSize = slider.value + 'px';
+    }
+    slider.addEventListener('input', function() {
+      const size = this.value + 'px';
+      display.style.fontSize = size;
+      overlayText.style.fontSize = size;   // controla overlay fullscreen
+      fontVal.textContent = size;
+      localStorage.setItem('lampadasFontSize', this.value);
+    });
+    // Ajuste automatico por orientacao (apenas se usuario nao escolheu tamanho)
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        const isLandscape = window.innerWidth > window.innerHeight;
+        const baseSize = isLandscape ? 22 : 16;
+        if (!localStorage.getItem('lampadasFontSize')) {
+          slider.value = baseSize;
+          display.style.fontSize = baseSize + 'px';
+          overlayText.style.fontSize = baseSize + 'px';
+          fontVal.textContent = baseSize + 'px';
+        }
+      }, 300);
+    });
+
+    // ─── TRANSCRIÇÃO COMPLETA ─────────────────────────────────────────────
+    function toggleTranscricao() {
+      const div   = document.getElementById('transcricao-completa');
+      const texto = document.getElementById('transcricao-texto');
+      if (div.style.display === 'none') {
+        const PAUSA = 2.0;
+        const paragrafos = [];
+        let atual = [];
+        for (let i = 0; i < legendas.length; i++) {
+          atual.push(legendas[i].text);
+          const prox = legendas[i + 1];
+          if (!prox || (prox.start - legendas[i].end) > PAUSA) {
+            paragrafos.push(atual.join(' '));
+            atual = [];
+          }
+        }
+        const html = paragrafos.map(p => `<p class="leg-paragrafo">${p}</p>`).join('');
+        texto.innerHTML = html;
+        div.style.display = 'block';
+      } else {
+        div.style.display = 'none';
+      }
+    }
+
+    // ─── FULLSCREEN (FASE 2.1) ────────────────────────────────────────────
+    // Aplica fullscreen no video-container (não na página inteira)
+    function toggleFullscreen() {
+      const container = document.getElementById('video-container');
+      const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      if (!isFs) {
+        if (container.requestFullscreen)        container.requestFullscreen();
+        else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+      } else {
+        if (document.exitFullscreen)        document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      }
+    }
+
+    // Sincroniza botão ao entrar/sair do fullscreen
+    function aoMudarFullscreen() {
+      const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      const btn  = document.getElementById('btn-fullscreen');
+      if (btn) btn.textContent = isFs ? '⛶ Sair da Tela Cheia' : '⛶ Tela Cheia c/ Legendas';
+    }
+    document.addEventListener('fullscreenchange',       aoMudarFullscreen);
+    document.addEventListener('webkitfullscreenchange', aoMudarFullscreen);
+
+    // ─── WAKE LOCK (FASE 2.2) ─────────────────────────────────────────────
+    let wakeLock = null;
+
+    async function ativarWakeLock() {
+      try {
+        if ('wakeLock' in navigator) {
+          wakeLock = await navigator.wakeLock.request('screen');
+          // Reativar automaticamente se a aba voltar ao foco
+          document.addEventListener('visibilitychange', async () => {
+            if (document.visibilityState === 'visible' && wakeLock !== null) {
+              try { wakeLock = await navigator.wakeLock.request('screen'); } catch(e) {}
+            }
+          }, { once: true });
+        }
+      } catch(e) {
+        // iOS Safari e outros que não suportam — silent fail (graceful degradation)
+      }
+    }
+
+    async function liberarWakeLock() {
+      try {
+        if (wakeLock) { await wakeLock.release(); wakeLock = null; }
+      } catch(e) {}
+    }
+
+    // Libera Wake Lock ao sair da página
+    window.addEventListener('beforeunload', liberarWakeLock);
+
+    // ─── DETECÇÃO DE PLATAFORMA (FASE 2.3) ───────────────────────────────
+    function detectarPlataforma() {
+      const ua = navigator.userAgent;
+      if (/Android/i.test(ua))           return 'android';
+      if (/iPhone|iPad|iPod/i.test(ua))  return 'ios';
+      return 'desktop';
+    }
+
+    const INSTRUCOES_TV = {
+      android: '📡 No Chrome: toque nos 3 pontinhos → "Transmitir..." → selecione sua TV',
+      ios:     '📺 No iPhone/iPad: Central de Controle → Espelhamento de Tela → selecione sua Apple TV',
+      desktop: '📡 No Chrome: clique nos 3 pontinhos → "Transmitir..." → selecione sua TV ou Chromecast'
+    };
+
+    let instrucaoTimeout = null;
+
+    function exibirInstrucaoTV() {
+      const plataforma = detectarPlataforma();
+      const el    = document.getElementById('instrucao-tv');
+      const texto = document.getElementById('instrucao-tv-texto');
+      if (el && texto) {
+        texto.textContent = INSTRUCOES_TV[plataforma] || INSTRUCOES_TV.desktop;
+        el.style.display = 'flex';
+        // Fecha automaticamente após 10 segundos
+        clearTimeout(instrucaoTimeout);
+        instrucaoTimeout = setTimeout(() => { el.style.display = 'none'; }, 10000);
+      }
+    }
+
+    function fecharInstrucaoTV() {
+      const el = document.getElementById('instrucao-tv');
+      if (el) el.style.display = 'none';
+      clearTimeout(instrucaoTimeout);
+    }
+
+    // ─── TV MODE UNIFICADO (FASE 2.2 + 2.3) ─────────────────────────────
+    async function ativarModoTV() {
+      // 1. Fullscreen no container de vídeo
+      const container = document.getElementById('video-container');
+      try {
+        if (container.requestFullscreen)           await container.requestFullscreen();
+        else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+      } catch(e) {}
+
+      // 2. Wake Lock (tela não apaga)
+      await ativarWakeLock();
+
+      // 3. Instrução contextual por plataforma
+      exibirInstrucaoTV();
+    }
+
+    // Libera Wake Lock ao sair do fullscreen
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        liberarWakeLock();
+      }
+    });
+
+    // ─── COPIAR LINK ──────────────────────────────────────────────────────
+    function copiarLink() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('Link copiado!');
+      });
+    }
+
+    // ─── BANNER WEBVIEW WHATSAPP (FASE 3.2) ──────────────────────────────
+    (function detectarWebView() {
+      const ua = navigator.userAgent;
+      // Detecta WebView do WhatsApp, Instagram, Facebook e similares
+      const isWebView =
+        /FBAN|FBAV|Instagram|WhatsApp/.test(ua) ||
+        (/wv/.test(ua) && /Android/.test(ua)) ||
+        (typeof window.matchMedia === 'function' &&
+         window.matchMedia('(display-mode: browser)').matches &&
+         /Safari/i.test(ua) && !/Chrome/i.test(ua) &&
+         window.navigator.standalone === false);
+
+      if (!isWebView) return;
+
+      const banner = document.getElementById('webview-banner');
+      const link   = document.getElementById('webview-chrome-link');
+
+      // Android: intent para abrir no Chrome
+      // iOS: instrução manual (sem suporte a intent://)
+      if (/Android/i.test(ua)) {
+        const pageUrl = encodeURIComponent(window.location.href);
+        link.href = `intent://${window.location.host}${window.location.pathname}#Intent;scheme=${window.location.protocol.replace(':','')};package=com.android.chrome;end`;
+      } else {
+        link.textContent = 'Abrir no Safari (e depois "Adicionar à Tela Inicial")';
+        link.href = window.location.href;
+        link.target = '_blank';
+      }
+
+      banner.style.display = 'flex';
+    })();
+
+    // ─── SERVICE WORKER (FASE 3.1) ────────────────────────────────────────
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('../../service-worker.js').catch(() => {});
+    }
+
+    // ─── ANALYTICS COMPLETO (Componente 10 — v2.0) ───────────────────────
+    // 1. Compartilhamento
+    document.querySelectorAll('.btn-share').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const method = btn.classList.contains('btn-whatsapp') ? 'WhatsApp'
+                     : btn.classList.contains('btn-telegram') ? 'Telegram' : 'copy_link';
+        gtag('event', 'share', { method, content_type: 'video', item_id: 'DeOqqX3EJnM' });
+      });
+    });
+    // 2. Transcricao
+    document.getElementById('btn-transcricao')?.addEventListener('click', () => {
+      gtag('event', 'transcricao_toggle', { event_category: 'Engajamento', video_id: 'DeOqqX3EJnM' });
+    });
+    // 3. TV Mode
+    document.getElementById('btn-tv-mode')?.addEventListener('click', () => {
+      gtag('event', 'tv_mode_ativado', { event_category: 'TV', event_label: detectarPlataforma(), video_id: 'DeOqqX3EJnM' });
+    });
+    // 4. Fullscreen
+    document.addEventListener('fullscreenchange', () => {
+      const isFs = !!document.fullscreenElement;
+      gtag('event', isFs ? 'fullscreen_entrou' : 'fullscreen_saiu', { event_category: 'TV', video_id: 'DeOqqX3EJnM' });
+    });
+    // 5. Font size (dispara ao soltar o slider — debounced)
+    if (slider) { let _ft; slider.addEventListener('change', function() {
+      clearTimeout(_ft); _ft = setTimeout(() => {
+        gtag('event', 'fonte_alterada', { event_category: 'Preferencias', value: +this.value, video_id: 'DeOqqX3EJnM' });
+      }, 500);
+    }); }
+    // 6. WebView banner exibido
+    if (document.getElementById('webview-banner')?.style.display !== 'none') {
+      gtag('event', 'webview_banner_shown', { event_category: 'WebView', video_id: 'DeOqqX3EJnM' });
+    }
+    // 7. Legendas assistidas (ao sair da pagina)
+    let _lStart = null, _lCount = 0;
+    const _origAtualizar = atualizarLegenda;
+    atualizarLegenda = function() {
+      _origAtualizar();
+      if (display.textContent && display.textContent.trim()) {
+        _lCount++;
+        if (!_lStart) _lStart = Date.now();
+      }
+    };
+    window.addEventListener('beforeunload', () => {
+      if (_lStart) {
+        gtag('event', 'legendas_assistidas', {
+          event_category: 'Engajamento',
+          video_id: 'DeOqqX3EJnM',
+          legendas_vistas: _lCount,
+          duracao_segundos: Math.round((Date.now() - _lStart) / 1000),
+          plataforma: detectarPlataforma(),
+          orientacao: innerWidth > innerHeight ? 'landscape' : 'portrait',
+          font_size: +(slider ? slider.value : 22)
+        });
+      }
+    });
+    // 8. Erro no player (iframe)
+    window.addEventListener('error', e => {
+      if (e.target && e.target.tagName === 'IFRAME') {
+        gtag('event', 'player_error', { event_category: 'Erro', video_id: 'DeOqqX3EJnM' });
+      }
+    }, true);
+  </script>
+
+</body>
+</html>
